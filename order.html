@@ -1,0 +1,544 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order Food - SufrahExpressNG</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #fefefe;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #ff5722;
+      padding: 1rem;
+      color: #fff;
+      text-align: center;
+      font-size: 1.5rem;
+    }
+    .menu-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      padding: 2rem;
+    }
+    .food-card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.3s;
+    }
+    .food-card:hover {
+      transform: scale(1.02);
+    }
+    .food-card img {
+      max-width: 100%;
+      border-radius: 10px;
+    }
+    .food-info {
+      margin-top: 0.5rem;
+      text-align: center;
+    }
+    .food-info h3 {
+      margin: 0.5rem 0;
+      color: #333;
+    }
+    .quantity-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0.5rem 0;
+    }
+    .quantity-container button {
+      padding: 5px 10px;
+      background: #ff5722;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+    .quantity-container span {
+      margin: 0 10px;
+      font-weight: bold;
+    }
+    .add-to-cart {
+      margin-top: 0.5rem;
+      background: #4caf50;
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .checkout-btn {
+      display: block;
+      margin: 2rem auto;
+      background: #000;
+      color: #fff;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+   /* for horizontal nav bar*/
+
+   .menu-nav {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  background-color: #fff;
+  border-bottom: 1px solid #ccc;
+  padding: 10px;
+  gap: 15px;
+}
+
+.menu-nav a {
+  text-decoration: none;
+  color: #333;
+  padding: 8px 12px;
+  white-space: nowrap;
+  font-weight: bold;
+  border-radius: 5px;
+  transition: background 0.3s;
+}
+
+.menu-nav a:hover {
+  background-color: #f2f2f2;
+}
+
+/* Optional: Add sticky effect on mobile */
+.menu-nav {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+
+
+
+    
+  </style>
+</head>
+<body>
+  <header>
+    Order Your Favourite Meal
+  </header> 
+
+  <!-- for nav bar-->
+  <nav class="menu-nav">
+    <ul>
+      <li><a href="combos.html"> Meal Combos</a></li>
+      <li><a href="#solo-meals">Solo Meals</a></li>
+      <li><a href="#Tasty-treats">Tasty Treats</a></li>
+      <li><a href="#Beverages">Beverages</a></li>
+    </ul>
+    <button class="checkout-btn" onclick="goToCart()">View Cart</button>
+  </nav>
+
+<!-- this code is for the menu-->
+
+<!--<section id="combos"></section>-->
+<section id="solo-meals"></section>
+<section id="#tasty-treats"></section>
+<section id="combos"></section>
+
+
+<section class="menu-section">
+  <!-- food card begins-->
+  <!--first food card-->
+
+  <div class="food-card" >
+    <img src="./assets/sharwarma 4.jpg" alt="Shawarma">
+    <div class="food-info">
+      <h3>Shawarma</h3>
+      <p>Juicy grilled chicken wrapped in soft bread with veggies and sauces.</p>
+      <p><strong>₦1200</strong></p>
+      <div class="quantity-container">
+        <button onclick="updateQuantity(this, -1)">-</button>
+        <span>1</span>
+        <button onclick="updateQuantity(this, 1)">+</button>
+      </div>
+      <button class="add-to-cart" onclick="addToCart('Shawarma', 1200, this)">Add to Cart</button>
+    </div>
+  </div>
+    <!-- end of first food card-->
+  <div class="food-card">
+    <img src="./assets/Garri parfait.png" alt="Garri Parfait">
+    <div class="food-info">
+      <h3>Garri Parfait</h3>
+      <p>Garri with milk, sugar, and toppings served chilled in a cup.</p>
+      <p><strong>₦600</strong></p>
+      <div class="quantity-container">
+        <button onclick="updateQuantity(this, -1)">-</button>
+        <span>1</span>
+        <button onclick="updateQuantity(this, 1)">+</button>
+      </div>
+      <button class="add-to-cart" onclick="addToCart('Garri Parfait', 600, this)">Add to Cart</button>
+    </div>
+  </div>
+
+  <!-- Repeat this pattern for other items -->
+
+
+  <div class="food-card">
+    <img src="./assets/noodles&boilded egg.webp" alt="Noodles with Egg & Veggies">
+    <div class="food-info">
+      <h3>Noodles with Egg & Veggies</h3>
+      <p>Spicy instant noodles stir-fried with colorful vegetables and topped with a boiled.</p>
+      <p><strong>₦700</strong></p>
+      <div class="quantity-container">
+        <button onclick="updateQuantity(this, -1)">-</button>
+        <span>1</span>
+        <button onclick="updateQuantity(this, 1)">+</button>
+      </div>
+      <button class="add-to-cart" onclick="addToCart('Noodles with Egg & Veggies', 700, this)">Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="food-card">
+    <img src="./assets/noodles&fried egg.webp" alt="Noodles with Egg & Veggies">
+    <div class="food-info">
+      <h3>Noodles with Egg & Veggies</h3>
+      <p>Spicy instant noodles stir-fried with colorful vegetables and topped with fried egg.</p>
+      <p><strong>₦700</strong></p>
+      <div class="quantity-container">
+        <button onclick="updateQuantity(this, -1)">-</button>
+        <span>1</span>
+        <button onclick="updateQuantity(this, 1)">+</button>
+      </div>
+      <button class="add-to-cart" onclick="addToCart('Noodles with Egg & Veggies', 700, this)">Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="food-card">
+    <img src="./assets/Bread & Akara.jpg" alt="Agege Bread & Akara">
+    <div class="food-info">
+      <h3>Agege Bread & Akara</h3>
+      <p>Soft, fluffy Agege bread served with crispy fried bean cakes – a perfect light meal or breakfast.</p>
+      <p><strong>₦500</strong></p>
+      <div class="quantity-container">
+        <button onclick="updateQuantity(this, -1)">-</button>
+        <span>1</span>
+        <button onclick="updateQuantity(this, 1)">+</button>
+      </div>
+      <button class="add-to-cart" onclick="addToCart('Agege Bread & Akara', 500, this)">Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="food-card">
+    <img src="./assets/zobo.jpg" alt="Zobo Drink">
+    <div class="food-info">
+      <h3>Zobo Drink (500ml)</h3>
+      <p>Refreshing hibiscus flower drink spiced with ginger, pineapple flavor, and cloves – served chilled.</p>
+      <p><strong>₦300</strong></p>
+      <div class="quantity-container">
+        <button onclick="updateQuantity(this, -1)">-</button>
+        <span>1</span>
+        <button onclick="updateQuantity(this, 1)">+</button>
+      </div>
+      <button class="add-to-cart" onclick="addToCart('Zobo Drink (500ml)', 300, this)">Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="food-card">
+    <img src="./assets/jollof rice & Chicken.jpg" alt="Jollof Rice & Chicken">
+    <div class="food-info">
+      <h3>Jollof Rice & Chicken</h3>
+      <p>Classic Nigerian party jollof rice, cooked in rich tomato sauce, served with juicy fried or grilled chicken.</p>
+      <p><strong>₦1000</strong></p>
+      <div class="quantity-container">
+        <button onclick="updateQuantity(this, -1)">-</button>
+        <span>1</span>
+        <button onclick="updateQuantity(this, 1)">+</button>
+      </div>
+      <button class="add-to-cart" onclick="addToCart('Jollof Rice & Chicken', 1000, this)">Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="food-card">
+    <img src="./assets/fried-rice.jpg" alt="Fried Rice & Plantain">
+    <div class="food-info">
+      <h3>Fried Rice & Plantain</h3>
+      <p>Savory fried rice mixed with vegetables and diced liver, served with golden fried plantains.</p>
+      <p><strong>₦900</strong></p>
+      <div class="quantity-container">
+        <button onclick="updateQuantity(this, -1)">-</button>
+        <span>1</span>
+        <button onclick="updateQuantity(this, 1)">+</button>
+      </div>
+      <button class="add-to-cart" onclick="addToCart('Fried Rice & Plantain', 900, this)">Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="food-card">
+    <img src="./assets/Semo&Egusi.jpg" alt="Semo & Egusi Soup">
+    <div class="food-info">
+      <h3>Semo & Egusi Soup</h3>
+      <p>Smooth semovita paired with rich, thick egusi (melon seed) soup with assorted meats and vegetables.</p>
+      <p><strong>₦1000</strong></p>
+      <div class="quantity-container">
+        <button onclick="updateQuantity(this, -1)">-</button>
+        <span>1</span>
+        <button onclick="updateQuantity(this, 1)">+</button>
+      </div>
+      <button class="add-to-cart" onclick="addToCart('Semo & Egusi Soup', 1000, this)">Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="food-card">
+    <img src="./assets/Yam-porridge.jpg" alt="Yam Porridge">
+    <div class="food-info">
+      <h3>Yam Porridge</h3>
+      <p>Tender yam chunks cooked in spicy palm oil sauce with vegetables and bits of fish or meat.</p>
+      <p><strong>₦600</strong></p>
+      <div class="quantity-container">
+        <button onclick="updateQuantity(this, -1)">-</button>
+        <span>1</span>
+        <button onclick="updateQuantity(this, 1)">+</button>
+      </div>
+      <button class="add-to-cart" onclick="addToCart('Yam Porridge', 600, this)">Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="food-card">
+    <img src="./assets/beans&garri.jpg" alt="Beans & Garri">
+    <div class="food-info">
+      <h3>Beans & Garri</h3>
+      <p>Nigerian brown beans cooked soft and served with crunchy garri – a filling and affordable meal.</p>
+      <p><strong>₦500</strong></p>
+      <div class="quantity-container">
+        <button onclick="updateQuantity(this, -1)">-</button>
+        <span>1</span>
+        <button onclick="updateQuantity(this, 1)">+</button>
+      </div>
+      <button class="add-to-cart" onclick="addToCart('Beans & Garri', 500, this)">Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="food-card">
+    <img src="./assets/rice-with-stew-and-boiled-egg.jpg" alt="White Rice & Stew with Egg">
+    <div class="food-info">
+      <h3>White Rice & Stew with Egg</h3>
+      <p>Steamed white rice with spicy tomato stew, served with a boiled egg or meat.</p>
+      <p><strong>₦800</strong></p>
+      <div class="quantity-container">
+        <button onclick="updateQuantity(this, -1)">-</button>
+        <span>1</span>
+        <button onclick="updateQuantity(this, 1)">+</button>
+      </div>
+      <button class="add-to-cart" onclick="addToCart('White Rice & Stew with Egg', 800, this)">Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="food-card">
+    <img src="./assets/Moimoi.webp" alt="Moi Moi">
+    <div class="food-info">
+      <h3>Moi Moi</h3>
+      <p>A soft, steamed bean cake made with ground beans, pepper, onions, and sometimes egg or fish.</p>
+      <p><strong>₦400</strong></p>
+      <div class="quantity-container">
+        <button onclick="updateQuantity(this, -1)">-</button>
+        <span>1</span>
+        <button onclick="updateQuantity(this, 1)">+</button>
+      </div>
+      <button class="add-to-cart" onclick="addToCart('Moi Moi', 400, this)">Add to Cart</button>
+    </div>
+  </div>
+
+  <!-- Snacks -->
+
+  <div class="food-card">
+    <img src="./assets/Puff-Puff.webp" alt="Puff Puff">
+    <div class="food-info">
+      <h3>Puff Puff (6 pieces)</h3>
+      <p>Golden, sweet deep-fried dough balls – soft inside, crispy outside. Perfect for snacking.</p>
+      <p><strong>₦300</strong></p>
+      <div class="quantity-container">
+        <button onclick="updateQuantity(this, -1)">-</button>
+        <span>1</span>
+        <button onclick="updateQuantity(this, 1)">+</button>
+      </div>
+      <button class="add-to-cart" onclick="addToCart('Puff Puff (6 pieces)', 300, this)">Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="food-card">
+    <img src="./assets/meatpie.jpg" alt="Meat Pie">
+    <div class="food-info">
+      <h3>Meat Pie</h3>
+      <p>Flaky pastry stuffed with spicy minced meat, carrots, and potatoes.</p>
+      <p><strong>₦400</strong></p>
+      <div class="quantity-container">
+        <button onclick="updateQuantity(this, -1)">-</button>
+        <span>1</span>
+        <button onclick="updateQuantity(this, 1)">+</button>
+      </div>
+      <button class="add-to-cart" onclick="addToCart('Meat Pie', 400, this)">Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="food-card">
+    <img src="./assets/Sausage.jpg" alt="Sausage Roll">
+    <div class="food-info">
+      <h3>Sausage Roll</h3>
+      <p>Baked roll filled with seasoned sausage meat – soft and satisfying.</p>
+      <p><strong>₦300</strong></p>
+      <div class="quantity-container">
+        <button onclick="updateQuantity(this, -1)">-</button>
+        <span>1</span>
+        <button onclick="updateQuantity(this, 1)">+</button>
+      </div>
+      <button class="add-to-cart" onclick="addToCart('Sausage Roll', 300, this)">Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="food-card">
+    <img src="./assets/eggroll.jpg" alt="Egg Roll">
+    <div class="food-info">
+      <h3>Egg Roll</h3>
+      <p>Boiled egg wrapped in slightly sweet dough and deep-fried until golden brown.</p>
+      <p><strong>₦300</strong></p>
+      <div class="quantity-container">
+        <button onclick="updateQuantity(this, -1)">-</button>
+        <span>1</span>
+        <button onclick="updateQuantity(this, 1)">+</button>
+      </div>
+      <button class="add-to-cart" onclick="addToCart('Egg Roll', 300, this)">Add to Cart</button>
+    </div>
+  </div>
+
+  <div class="food-card">
+    <img src="./assets/popcorn.jpg" alt="Popcorn">
+    <div class="food-info">
+      <h3>Popcorn (Butter or Sugar)</h3>
+      <p>Light and crunchy popcorn with your choice of butter or sweet sugar glaze.</p>
+      <p><strong>₦200</strong></p>
+      <div class="quantity-container">
+        <button onclick="updateQuantity(this, -1)">-</button>
+        <span>1</span>
+        <button onclick="updateQuantity(this, 1)">+</button>
+      </div>
+      <button class="add-to-cart" onclick="addToCart('Popcorn (Butter or Sugar)', 200, this)">Add to Cart</button>
+    </div>
+  </div>
+
+</section>
+        <!--other section begins-->
+<!--
+    <section id="combos">
+
+      <div class="food-card">
+        <img src="./assets/beans&garri.jpg" alt="Beans & Garri">
+        <div class="food-info">
+          <h3>Beans & Garri</h3>
+          <p>Nigerian brown beans cooked soft and served with crunchy garri – a filling and affordable meal.</p>
+          <p><strong>₦500</strong></p>
+          <div class="quantity-container">
+            <button onclick="updateQuantity(this, -1)">-</button>
+            <span>1</span>
+            <button onclick="updateQuantity(this, 1)">+</button>
+          </div>
+          <button class="add-to-cart" onclick="addToCart('Beans & Garri', 500, this)">Add to Cart</button>
+        </div>
+      </div> -->
+
+      <!--Beans&Bread-->
+  <!--   <div class="food-card">
+        <img src="./assets/beans&bread.jpg" alt="Beans & Garri">
+        <div class="food-info">
+          <h3>Beans & Bread</h3>
+          <p>Nigerian brown beans cooked soft and served with Bread – a filling and affordable meal.</p>
+          <p><strong>₦500</strong></p>
+          <div class="quantity-container">
+            <button onclick="updateQuantity(this, -1)">-</button>
+            <span>1</span>
+            <button onclick="updateQuantity(this, 1)">+</button>
+          </div>
+          <button class="add-to-cart" onclick="addToCart('Beans & Bread', 500, this)">Add to Cart</button>
+        </div>
+      </div> --> 
+
+      <!--rice-stew-boiled-egg-->
+  <!--
+    </section>
+ -->
+  
+  
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</section>
+
+
+<!--End of menu-->
+  <button class="checkout-btn" onclick="goToCart()">View Cart</button>
+
+  <script>
+    const cart = [];
+
+    function updateQuantity(btn, change) {
+      const span = btn.parentElement.querySelector('span');
+      let qty = parseInt(span.textContent);
+      qty += change;
+      if (qty < 1) qty = 1;
+      span.textContent = qty;
+    }
+
+    function addToCart(name, price, btn) {
+      const qty = parseInt(btn.parentElement.querySelector('span').textContent);
+      cart.push({ name, price, quantity: qty });
+      alert(`${qty} ${name}(s) added to cart.`);
+    }
+
+    function goToCart() {
+      localStorage.setItem('cart', JSON.stringify(cart));
+      window.location.href = 'cart.html';
+    }
+  </script>
+  </body>
+</html>

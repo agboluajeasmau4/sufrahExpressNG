@@ -1,0 +1,305 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>Payment | Sufra Express</title> 
+  <style> 
+    body { 
+      font-family: Arial, sans-serif; 
+      margin: 0; 
+      padding: 0; 
+      background-color: #f8f8f8; 
+    } 
+    header { 
+      background-color:/* #222*/ #ff5722; 
+      color: white; 
+      padding: 10px; 
+    } 
+    .navbar { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+    } 
+    #checkout { 
+      margin: 20px auto; 
+      width: 80%; 
+      max-width: 600px; 
+      padding: 20px; 
+      background-color: white; 
+      border-radius: 5px; 
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    } 
+    #checkout h2 { 
+      text-align: center; 
+      margin-bottom: 20px; 
+    } 
+    form { 
+      margin-bottom: 20px; 
+    } 
+    label { 
+      display: block; 
+      margin-bottom: 8px; 
+      font-weight: bold; 
+    } 
+    input[type="text"], input[type="tel"], select { 
+      width: 100%; 
+      padding: 10px; 
+      margin-bottom: 10px; 
+      border: 1px solid #ccc; 
+      border-radius: 5px; 
+    } 
+    button { 
+      cursor: pointer; 
+      padding: 10px 20px; 
+      background-color: #28a745; 
+      border: none; 
+      color: white; 
+      border-radius: 5px; 
+      width: 100%; 
+    } 
+    #receipt-summary { 
+      margin-top: 20px; 
+      padding: 15px; 
+      background-color: /*#f1f1f1*/ #ff5722;
+      border-radius: 5px; 
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    } 
+    #receipt-summary h3 { 
+      text-align: center; 
+      margin-bottom: 20px; 
+    } 
+    .receipt-item { 
+      display: flex; 
+      justify-content: space-between; 
+      padding: 5px 0; 
+      border-bottom: 1px solid #ddd; 
+    } 
+    .receipt-total { 
+      font-size: 18px; 
+      font-weight: bold; 
+      margin-top: 20px; 
+    } 
+    footer { 
+      background-color: #222; 
+      color: white; 
+      text-align: center; 
+      padding: 10px; 
+    } 
+    .receipt-image { 
+      margin-top: 30px; 
+      background-color: white; 
+      padding: 20px; 
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+      border-radius: 10px; 
+      max-width: 600px; 
+      margin: 0 auto; 
+      position: relative; 
+    } 
+    .receipt-image p { 
+      margin: 5px 0; 
+      font-size: 16px; 
+    } 
+    .receipt-image .total { 
+      font-size: 20px; 
+      font-weight: bold; 
+      margin-top: 20px; 
+    } 
+  </style> 
+</head> 
+<body> 
+  <header> 
+    <div class="navbar"> 
+      <h1>Sufra Express</h1> 
+      <a href="index.html" style="color: white; text-decoration: none;">Back to Home</a> 
+    </div> 
+  </header> 
+  <section id="checkout"> 
+    <h2>Checkout</h2> 
+    <!-- Cart Summary --> 
+    <div id="cart-details"> 
+      <!-- Cart details will be populated here dynamically from localStorage --> 
+    </div> 
+    <h3>Delivery Information</h3> 
+    <form id="delivery-form"> 
+      <label for="local-government">Select Local Government:</label> 
+      <select id="local-government" required> 
+        <option value="">Select your local government</option> 
+        <option value="Ojo">Ojo</option> 
+        <option value="Badagry">Badagry</option> 
+        <option value="Agege">Agege</option> 
+        <option value="Ajeromi-Ifelodun">Ajeromi-Ifelodun</option> 
+        <option value="Alimosho">Alimosho</option> 
+        <option value="Amuwo-Odofin">Amuwo-Odofin</option> 
+        <option value="Apapa">Apapa</option> 
+        <option value="Eti-Osa">Eti-Osa</option> 
+        <option value="Ikeja">Ikeja</option> 
+        <option value="Ikorodu">Ikorodu</option> 
+        <option value="Kosofe">Kosofe</option> 
+        <option value="Lagos Island">Lagos Island</option> 
+        <option value="Lagos Mainland">Lagos Mainland</option> 
+        <option value="Mushin">Mushin</option> 
+        <option value="Oshodi-Isolo">Oshodi-Isolo</option> 
+        <option value="Somolu">Somolu</option> 
+        <option value="Surulere">Surulere</option> 
+      </select> 
+      <label for="name">Name:</label> 
+      <input type="text" id="name" placeholder="Enter your full name" required>
+
+      <label for="address">Address:</label> 
+      <input type="text" id="address" placeholder="Enter your street address" required> 
+
+      <label for="phone">Phone Number:</label> 
+      <input type="tel" id="phone" placeholder="Enter your phone number" required> 
+      <button type="submit">Confirm Order</button> 
+    </form> 
+
+    <div id="receipt-summary" style="display: none;"> 
+      <h3>Receipt Summary</h3> 
+      <div id="cart-items-summary"></div> 
+      <div class="receipt-total"> 
+        <p><strong>Subtotal:</strong> ₦<span id="subtotal"></span></p> 
+      </div> 
+      <div class="receipt-total"> 
+        <p><strong>Delivery Fee:</strong> ₦<span id="deliveryFee"></span></p> 
+      </div> 
+      <div class="receipt-total"> 
+        <p><strong>Tax (5%):</strong> ₦<span id="tax"></span></p> 
+      </div> 
+      <div class="receipt-total receipt-summary"> 
+        <p><strong>Total Amount:</strong> ₦<span id="totalAmount"></span></p> 
+      </div> 
+      <div> 
+        <p><strong>Name:</strong> <span id="user-name"></span></p>
+        <p><strong>Delivery Address:</strong> <span id="user-address"></span></p> 
+        <p><strong>Phone Number:</strong> <span id="user-phone"></span></p> 
+        <p><strong>Message:</strong> You will receive a call soon after confirming your order and payment.</p> 
+      </div>
+      
+      <hr>
+      <div id="whatsapp-message" style="margin-top: 20px; text-align: center;">
+        <p><strong>To confirm your order:</strong></p>
+        <p>Please take a screenshot of this receipt summary and send it to us via <a href="" id="whatsapp-link" target="_blank">WhatsApp</a>.</p>
+      </div>
+      <hr>
+      <div class="payment-info">
+        <h3>Payment Information</h3>
+        <p>Payment Method: <strong>Bank Transfer (Details will be shared via WhatsApp)</strong></p>
+        <p>Please transfer the total amount to the bank account after confirming your order.</p>
+   
+    </div> 
+
+    
+  </section> 
+
+
+  <footer> 
+    <p>&copy; 2025 Sufra Express</p> 
+  </footer> 
+  <script> 
+    // Check if cart data exists in localStorage 
+    const cartItems = JSON.parse(localStorage.getItem('cart')) || []; 
+ 
+    // Populate cart details dynamically from localStorage 
+    const cartItemsSummary = document.getElementById('cart-items-summary'); 
+    if (cartItems.length > 0) { 
+      cartItems.forEach(item => { 
+        const itemSummary = document.createElement('div'); 
+        itemSummary.className = 'receipt-item'; 
+        itemSummary.innerHTML = ` 
+          <span>${item.name} (x${item.quantity})</span> 
+          <span>₦${item.price * item.quantity}</span> 
+        `; 
+        cartItemsSummary.appendChild(itemSummary); 
+      }); 
+    } else { 
+      cartItemsSummary.innerHTML = '<p>Your cart is empty.</p>'; 
+    } 
+ 
+    // Delivery fee calculation (based on local government selection)
+    const localGovernments = { 
+      "Ojo": 600, 
+      "Badagry": 600, 
+      "Agege": 1000, 
+      "Ajeromi-Ifelodun": 1000, 
+      "Alimosho": 1000, 
+      "Amuwo-Odofin": 1000, 
+      "Apapa": 1500, 
+      "Eti-Osa": 1500, 
+      "Ikeja": 1500, 
+      "Ikorodu": 1500, 
+      "Kosofe": 1500, 
+      "Lagos Island": 1500, 
+      "Lagos Mainland": 1500, 
+      "Mushin": 1500, 
+      "Oshodi-Isolo": 1500, 
+      "Somolu": 1500, 
+      "Surulere": 1500 
+    }; 
+ 
+    const deliveryForm = document.getElementById('delivery-form'); 
+    const receiptSummary = document.getElementById('receipt-summary'); 
+ 
+    deliveryForm.addEventListener('submit', function (e) { 
+      e.preventDefault(); 
+      //the new input
+      const name = document.getElementById('name').value;
+      const address = document.getElementById('address').value; 
+      const phone = document.getElementById('phone').value; 
+      const selectedLG = document.getElementById('local-government').value; 
+ 
+      const deliveryFee = localGovernments[selectedLG] || 0; 
+      const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0); 
+      const tax = Math.round(subtotal * 0.05); 
+      const totalAmount = subtotal + deliveryFee + tax; 
+ 
+      document.getElementById('subtotal').innerText = subtotal; 
+      document.getElementById('deliveryFee').innerText = deliveryFee; 
+      document.getElementById('tax').innerText = tax; 
+      document.getElementById('totalAmount').innerText = totalAmount; 
+      document.getElementById('user-address').innerText = address; 
+      document.getElementById('user-phone').innerText = phone; 
+      document.getElementById('user-name').innerText = name;
+     
+      receiptSummary.style.display = 'block'; 
+    }); 
+
+    // this is for whatsapp
+    
+    // Function to generate WhatsApp message
+function generateWhatsAppMessage() {
+  // Get the values from the receipt summary
+  var subtotal = document.getElementById('subtotal').innerText;
+  var deliveryFee = document.getElementById('deliveryFee').innerText;
+  var tax = document.getElementById('tax').innerText;
+  var totalAmount = document.getElementById('totalAmount').innerText;
+  var userAddress = document.getElementById('user-address').innerText;
+  var userPhone = document.getElementById('user-phone').innerText;
+
+  // Construct the message for WhatsApp
+  var message = `*Order Confirmation*\n\n`;
+  message += `*Subtotal:* ₦${subtotal}\n`;
+  message += `*Delivery Fee:* ₦${deliveryFee}\n`;
+  message += `*Tax (5%):* ₦${tax}\n`;
+  message += `*Total Amount:* ₦${totalAmount}\n\n`;
+  message += `*Delivery Address:* ${userAddress}\n`;
+  message += `*Phone Number:* ${userPhone}\n\n`;
+  message += `Please confirm your order and we will reach out to you soon.`;
+
+  // URL encode the message to ensure it works in a URL
+  var encodedMessage = encodeURIComponent(message);
+
+  // Replace the WhatsApp link with the generated message
+  var whatsappLink = `https://wa.me/2348085870358?text=${encodedMessage}`;  // Change the number here
+  document.getElementById('whatsapp-link').setAttribute('href', whatsappLink);
+}
+
+// Call the function when the page is ready or after the user submits the form
+generateWhatsAppMessage();
+
+// for the payment
+
+
+  </script> 
+</body> 
+</html>

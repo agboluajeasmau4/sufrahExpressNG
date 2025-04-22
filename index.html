@@ -1,0 +1,204 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sufrah Express NG</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #fff8f1;
+    }
+    header {
+      background-color: #f97316;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    .hero {
+      position: relative;
+      height: 700px;
+      overflow: hidden;
+    }
+    .hero img {
+      width: 100%;
+      height: 700px;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+    .hero img.active {
+      opacity: 1;
+    }
+    .review-section {
+      background-color: #fff3e0;
+      padding: 2rem;
+      border-top: 3px solid #ffa726;
+    }
+    .review-section h2 {
+      text-align: center;
+      color: #e65100;
+    }
+    .review {
+      background: #fff;
+      border-radius: 10px;
+      padding: 1rem;
+      margin: 1rem auto;
+      max-width: 600px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .review-form {
+      display: flex;
+      flex-direction: column;
+      max-width: 400px;
+      margin: 2rem auto;
+    }
+    .review-form input, .review-form textarea, .review-form button {
+      margin: 0.5rem 0;
+      padding: 0.75rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .review-form button {
+      background-color: #f97316;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    .menu-btn{
+      padding: 10px 10px;
+      
+     
+      
+      color: orange;
+      font-size: 20px;
+      font-weight: 600;
+    }
+    .order-menu{
+      align-items: center;
+      justify-content: center;
+      align-items: center;
+    }
+    @media (max-width: 600px) {
+      .hero {
+        height: 500px;
+      }
+      .hero img {
+        height: 500px;
+        
+      }
+    }
+/*
+    @media (max-width:500px) {
+      .hero{
+        height: 500px;
+      }
+      .hero img{
+        height: 500px;
+        width: 100%;
+      }
+    }*/
+    @media (min-width:1000px ) {
+      .hero{
+        height:1000px ;
+      }
+      .hero img{
+        height: 1000px;
+       width: 1000px;
+      }
+    }
+    #location-popup {
+      position: fixed;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #ffcdd2;
+      padding: 1rem;
+      border-radius: 5px;
+      color: #c62828;
+      display: none;
+      z-index: 999;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Welcome to Sufrah Express NG</h1>
+    <p>Delicious meals delivered fresh to your door in Lagos</p>
+  </header>  <div class="hero">
+    <img src="./assets/rice-with-stew-and-boiled-egg.jpg" class="active" alt="Delicious Meal">
+    <img src="./assets/fried-rice.jpg" alt="Yummy Food">
+    <img src="./assets/Zobo.jpg" alt="Tasty Dish">
+    <img src="./assets/jollof rice & Chicken.jpg" alt="Tasty Dish">
+    <img src="./assets/Garri parfait.png" alt="Tasty Dish">
+    <img src="./assets/Bread & Akara.jpg" alt="Tasty Dish">
+    <img src="./assets/Eggroll.jpg" alt="Tasty Dish">
+    <img src="./assets/sharwarma 2.jpg" alt="Tasty Dish">
+    <img src="./assets/Sausage.jpg" alt="Tasty Dish">
+    <img src="./assets/Moi-moi.png" alt="Tasty Dish">
+    <img src="./assets/noodles&fried egg.webp" alt="Tasty Dish">
+    <img src="./assets/popcorn.jpg" alt="Tasty Dish">
+    <img src="./assets/photo.jpg" alt="Tasty Dish">
+    <img src="./assets/Puff-Puff.webp" alt="Tasty Dish">
+    <img src="./assets/sharwarma 1.jpg" alt="Tasty Dish">
+    <img src="./assets/Amala and Ewedu.png" alt="Tasty Dish">
+  </div>
+  <section id="place-order" style="text-align: center; margin: 50px 0;">
+    <h2>Ready to Place Your Order?</h2>
+    
+    <a href="order.html">
+      <button style="padding: 12px 24px; font-size: 18px; background-color: #25D366;
+       color: white; border: none; border-radius: 8px; cursor: pointer;">Start Ordering</button>
+      
+    </a>
+  </section>
+    <section class="review-section">
+    <h2>What Our Customers Say</h2>
+    <div id="reviews">
+      <div class="review">Tasty food and fast delivery! - Fatima</div>
+      <div class="review">The best jollof rice I've had! - Ahmed</div>
+      <div class="review">Good customer service - Sola</div>
+      <div class="review">Fast delivery, easy payment - David</div>
+      <div class="review">I rate 5 stars - Lizzy</div>
+    </div>
+    <form class="review-form" onsubmit="event.preventDefault(); submitReview();">
+      <input type="text" id="name" placeholder="Your Name" required>
+      <textarea id="comment" placeholder="Your Review" required></textarea>
+      <button type="submit">Submit Review</button>
+    </form>
+  </section>  <div id="location-popup">We currently only deliver within Lagos State.</div>  <script>
+    // Image slider
+    let images = document.querySelectorAll('.hero img');
+    let current = 0;
+    setInterval(() => {
+      images[current].classList.remove('active');
+      current = (current + 1) % images.length;
+      images[current].classList.add('active');
+    }, 4000);
+
+    // Review submission
+    function submitReview() {
+      const name = document.getElementById('name').value;
+      const comment = document.getElementById('comment').value;
+      const newReview = document.createElement('div');
+      newReview.className = 'review';
+      newReview.textContent = `${comment} - ${name}`;
+      document.getElementById('reviews').appendChild(newReview);
+      document.getElementById('name').value = '';
+      document.getElementById('comment').value = '';
+    }
+
+    // Ask for location\
+    window.onload = () => {
+      const userLocation = prompt("Please enter your delivery address (must include 'Lagos' as your state):");
+      if (!userLocation || !userLocation.toLowerCase().includes('lagos')) {
+        document.getElementById('location-popup').style.display = 'block';
+      }
+    };
+  </script></body>
+</html>

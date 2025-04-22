@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cart - SufrahExpressNG</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #fefefe;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #ff5722;
+      padding: 1rem;
+      color: #fff;
+      text-align: center;
+      font-size: 1.5rem;
+    }
+    .cart-container {
+      padding: 2rem;
+    }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 1rem;
+      border-bottom: 1px solid #ddd;
+    }
+    .cart-item .item-info {
+      flex: 1;
+    }
+    .cart-item .item-info h3 {
+      margin: 0;
+    }
+    .cart-item .item-info p {
+      margin: 0.5rem 0;
+    }
+    .receipt {
+      margin-top: 2rem;
+      padding: 1rem;
+      background: #fafafa;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+    .receipt p {
+      margin: 0.5rem 0;
+    }
+    .checkout-btn {
+      display: block;
+      margin: 2rem auto;
+      background: #000;
+      color: #fff;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    Your Cart - SufrahExpressNG
+  </header>
+
+  <div class="cart-container">
+    <!-- Cart items will be added here dynamically -->
+  </div>
+
+  <div class="receipt">
+    <h3>Order Summary</h3>
+    <div id="order-summary">
+      <!-- Summary will be added here dynamically -->
+    </div>
+    <div id="total-summary">
+      <p><strong>Subtotal:</strong> ₦<span id="subtotal">0</span></p>
+      <p><strong>Tax (5%):</strong> ₦<span id="tax">0</span></p>
+      <p><strong>Total:</strong> ₦<span id="total">0</span></p>
+    </div>
+  </div>
+
+  <button class="checkout-btn" onclick="proceedToCheckout()">Proceed to Checkout</button>
+
+  <script>
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const cartContainer = document.querySelector('.cart-container');
+    const orderSummary = document.getElementById('order-summary');
+    const subtotalElem = document.getElementById('subtotal');
+    const taxElem = document.getElementById('tax');
+    const totalElem = document.getElementById('total');
+
+    let subtotal = 0;
+    let tax = 0;
+    let total = 0;
+
+    // Display cart items and calculate subtotal, tax, and total
+    if (cart.length === 0) {
+      cartContainer.innerHTML = '<p>Your cart is empty!</p>';
+    } else {
+      cart.forEach(item => {
+        const cartItem = document.createElement('div');
+        cartItem.classList.add('cart-item');
+        const itemTotal = item.price * item.quantity;
+        subtotal += itemTotal;
+        tax += itemTotal * 0.05;  // 5% tax
+        cartItem.innerHTML = `
+          <div class="item-info">
+            <h3>${item.name}</h3>
+            <p>₦${item.price} x ${item.quantity} = ₦${itemTotal}</p>
+          </div>
+        `;
+        orderSummary.appendChild(cartItem);
+      });
+
+      // Calculate the final total
+      total = subtotal + tax;
+
+      // Update the receipt
+      subtotalElem.textContent = subtotal.toFixed(2);
+      taxElem.textContent = tax.toFixed(2);
+      totalElem.textContent = total.toFixed(2);
+    }
+
+    function proceedToCheckout() {
+      if (cart.length === 0) {
+        alert('Your cart is empty. Please add items before proceeding.');
+      } else {
+        window.location.href = 'checkout.html';
+      }
+    }
+  </script>
+</body>
+</html>
